@@ -40,6 +40,16 @@ As you can see you don't add any key because AppEntity provides Id property as k
 public DbSet<Person> Person => Set<Person>();
 ```
 
+In case you are using includes and want to have it returned in controler for one object you must configure this properties as **AutoInclude**. Here you can find example:
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Person>().Navigation(x => x.Address).AutoInclude();
+    }
+```
+
 ### Register db context
 
 To register your database context in DI container please do following statement:

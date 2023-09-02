@@ -33,7 +33,7 @@ public abstract class AppController<T> : ControllerBase where T : AppEntity
     {
         logger.LogInformation("Query for {type}, {filer}, {select}, {top}, {skip}", typeof(T), filter, select, top,
             skip);
-        return table?.AsQueryable();
+        return table?.IgnoreAutoIncludes().AsQueryable();
     }
 
     [HttpPost]
@@ -63,8 +63,7 @@ public abstract class AppController<T> : ControllerBase where T : AppEntity
     }
 
     [HttpGet("{id}")]
-    [EnableQuery]
-    public virtual ActionResult<T> GetOne(long id, [FromQuery(Name = "$select")] string? select, [FromQuery(Name = "$expand")] string? expand)
+    public virtual ActionResult<T> GetOne(long id)
     {
         var obj = table?.FirstOrDefault(x => x.Id == id);
         if (obj == null) return NotFound();
