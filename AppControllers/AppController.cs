@@ -28,7 +28,7 @@ public abstract class AppController<T> : ControllerBase where T : AppEntity
     [HttpGet]
     [EnableQuery]
     public virtual IQueryable<T>? Get(
-        [FromQuery(Name = "$filter")] string? filter, [FromQuery(Name = "$top")] int? top, [FromQuery(Name = "$skip")] int? skip, [FromQuery(Name = "$orderby")] string? orderBy, [FromQuery(Name = "$select")] string? select
+        [FromQuery(Name = "$filter")] string? filter, [FromQuery(Name = "$top")] int? top, [FromQuery(Name = "$skip")] int? skip, [FromQuery(Name = "$orderby")] string? orderBy, [FromQuery(Name = "$select")] string? select, [FromQuery(Name = "$expand")] string? expand
     )
     {
         logger.LogInformation("Query for {type}, {filer}, {select}, {top}, {skip}", typeof(T), filter, select, top,
@@ -63,7 +63,8 @@ public abstract class AppController<T> : ControllerBase where T : AppEntity
     }
 
     [HttpGet("{id}")]
-    public virtual ActionResult<T> GetOne(long id)
+    [EnableQuery]
+    public virtual ActionResult<T> GetOne(long id, [FromQuery(Name = "$select")] string? select, [FromQuery(Name = "$expand")] string? expand)
     {
         var obj = table?.FirstOrDefault(x => x.Id == id);
         if (obj == null) return NotFound();

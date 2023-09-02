@@ -86,5 +86,6 @@ When OData is registerd you have access to following query parameters on GET end
 - $orderby
 - $top
 - $skip
+- $expand
 
 This query params can give you possibility to easy make filters on default controller parameters available out of the box.
