@@ -1,4 +1,4 @@
-# Web api with ef core universal
+# Universal Webapi with ef core 
 
 Idea of this project is to provide simple library which provide helper classes to create **DbContext** and **Controllers** based on defined **Entity classes**
 
